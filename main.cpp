@@ -13,6 +13,9 @@ static SDL_Texture *texture = NULL;
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
 {
+    SDL_Surface *surface = NULL;
+    char *bmp_path = NULL;
+
     SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
 
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -25,14 +28,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
     
-    SDL_IOStream* io = SDL_IOFromConstMem(nave, bmp_size);
-    if (!io) {
-        SDL_Log("Erro criando SDL_IOStream: %s", SDL_GetError());
-    }
-    SDL_Surface* surface = SDL_LoadBMP_IO(io, 1);
-    if (!surface) {
-        SDL_Log("Erro carregando BMP: %s", SDL_GetError());
-    }
+    SDL_asprintf(&bmp_path, "%sassets/nave.bmp", SDL_GetBasePath());  
+    surface = SDL_LoadBMP(bmp_path);
     texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 
@@ -53,13 +50,13 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 {
     SDL_FRect dst_rect;
     dst_rect.x=50;dst_rect.y=50;dst_rect.h=100;dst_rect.w=100;
-    SDL_SetRenderDrawColorFloat(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE); 
+    SDL_SetRenderDrawColorFloat(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE); 
 
     SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE); 
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE); 
     SDL_RenderDebugText(renderer, 10, 10, "It can be scaled.");
 
-    SDL_RenderClear(renderer);
+    //SDL_RenderClear(renderer);
     SDL_RenderTexture(renderer, texture, NULL, &dst_rect);
 
     SDL_RenderPresent(renderer);
