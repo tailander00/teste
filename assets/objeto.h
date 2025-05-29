@@ -13,9 +13,8 @@ class Objeto{
         SDL_Texture *texture;
         SDL_Surface *surface;
         char *bmp_path;
-    protected:
-        SDL_FRect *dst_rect;
     public:
+        SDL_FRect *dst_rect;
         
         Objeto(SDL_Renderer *renderer, string img);
         SDL_FRect* getRect();
@@ -27,10 +26,7 @@ Objeto::Objeto(SDL_Renderer *renderer, string img){
     SDL_GetWindowSizeInPixels(SDL_GetRenderWindow(renderer), nullptr, &altura);
     
     dst_rect = new SDL_FRect();
-    dst_rect->h = 100;
-    dst_rect->w = 100;
-    dst_rect->x = 50;
-    dst_rect->y = altura-50 ;
+
     img = "%s"+img;
     SDL_asprintf(&bmp_path, img.c_str(), SDL_GetBasePath());
     surface = SDL_LoadBMP(bmp_path);

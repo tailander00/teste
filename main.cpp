@@ -64,6 +64,7 @@ SDL_AppResult SDL_AppIterate(void *appstate){
     SDL_RenderDebugText(renderer, 10, 10, "It can be scaled.");
 
     SDL_RenderTexture(renderer, player->getTexture(), NULL, player->getRect());
+    SDL_RenderTexture(renderer, player->tiro->getTexture(), NULL, player->tiro->getRect());
     SDL_RenderTexture(renderer, inimigos->getTexture(), NULL, inimigos->getRect());
 
     SDL_RenderPresent(renderer);
